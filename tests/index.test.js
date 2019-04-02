@@ -1,3 +1,5 @@
+import { sleep } from './test-utils';
+
 import hexagon from '../src';
 
 describe('Hexagon.js', () => {
@@ -78,6 +80,23 @@ describe('Hexagon.js', () => {
       fnUseCaseAB2.execute({ c: 2 });
 
       expect(fn).toHaveBeenCalledWith({ a: 1, b: 2, c: 2 });
+    });
+  });
+
+  describe('async use cases', () => {
+    it('allows to await a use case with an async implementation', async () => {
+      let response;
+      const SUCCESS = 'success';
+      const asyncFn = async () => {
+        await sleep(100);
+        response = SUCCESS;
+      };
+
+      const asyncUseCase = hexagon(asyncFn);
+
+      await asyncUseCase.execute();
+
+      expect(response).toEqual(SUCCESS);
     });
   });
 });

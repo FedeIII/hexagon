@@ -8,7 +8,7 @@ const getExecute = (fn, ports = {}) => (newPorts = {}) => {
     allPorts = undefined;
   }
 
-  fn(allPorts);
+  return fn(allPorts);
 };
 
 const createHexagon = (fn, name, ports = {}) => ({
