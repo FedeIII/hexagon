@@ -61,3 +61,14 @@ const sum5UseCase = sumUseCase.usePorts({ port1: 5 });
 sum1UseCase.execute({ port2: 2, port3: 3 }); // 6
 sum5UseCase.execute({ port2: 2, port3: 3 }); // 10
 ```
+
+The UseCase can be implemented with an async function, allowing the infrastructure to await the UseCase execution
+```javascript
+const asyncUseCase = hexagon(asyncFunction);
+
+await asyncUseCase.execute();
+
+// or without async/await:
+
+asyncUseCase.execute().then(() => {});
+```
