@@ -47,9 +47,6 @@ Multiple UseCases can be executed based on an new unbound UseCase:
 ```javascript
 const sumUseCase = hexagon(sum);
 
-const show6UseCase = sumUseCase.usePorts({ port1: 1, port2: 2, port3: 3 });
-const show10UseCase = sumUseCase.usePorts({ port1: 5, port2: 2, port3: 3 });
-
 sumUseCase.execute({ port1: 1, port2: 2, port3: 3 }); // 6
 sumUseCase.execute({ port1: 5, port2: 2, port3: 3 }); // 10
 ```
@@ -58,9 +55,9 @@ Multiple UseCases can be build based on some UseCase with some ports bound:
 ```javascript
 const sumUseCase = hexagon(sum);
 
-const show6UseCase = sumUseCase.usePorts({ port1: 1, port2: 2, port3: 3 });
-const show10UseCase = sumUseCase.usePorts({ port1: 5, port2: 2, port3: 3 });
+const sum1UseCase = sumUseCase.usePorts({ port1: 1 });
+const sum5UseCase = sumUseCase.usePorts({ port1: 5 });
 
-show6UseCase.execute(); // 6
-show10UseCase.execute(); // 10
+sum1UseCase.execute({ port2: 2, port3: 3 }); // 6
+sum5UseCase.execute({ port2: 2, port3: 3 }); // 10
 ```
