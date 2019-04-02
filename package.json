@@ -1,11 +1,11 @@
 {
-  "name": "hexagon.js",
+  "name": "@azyr/hexagon",
   "version": "0.0.1",
   "main": "./dist/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/FedeIII/hexagon.js"
+    "url": "https://github.com/FedeIII/hexagon"
   },
   "scripts": {
     "clean": "rm -rf dist",

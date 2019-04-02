@@ -1,6 +1,6 @@
-# Hexagon.js
+# Hexagon
 
-Hexagon.js is a JavaScript library aimed to make it easier in JS to have an Hexagonal Architecture, independently from whichever framework you decide to use.
+Hexagon is a JavaScript library aimed to make it easier in JS to have an Hexagonal Architecture, independently from whichever framework you decide to use.
 
 It allows to define infrastructure independent use cases with pure javascript that get their primary and secondary ports at different points in time and gets executed on demand with whichever ports already passed
 
@@ -8,7 +8,7 @@ It allows to define infrastructure independent use cases with pure javascript th
 
 `hexagon` is used to create a UseCase scenario, passing the implementation of the use case as a JS function that receives an object as a single input containing all the ports used in the use case:
 ```javascript
-import hexagon from 'hexagon.js';
+import hexagon from 'hexagon';
 
 function sum({port1, port2, port3}) {
   console.log(port1 + port2 + port3);
