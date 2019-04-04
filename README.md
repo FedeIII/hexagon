@@ -22,7 +22,7 @@ npm install --save-dev @azyr/hexagon
 
 `hexagon` is used to create a UseCase scenario, passing the implementation of the use case as a JS function that receives an object as a single input containing all the ports used in the use case:
 ```javascript
-import hexagon from 'hexagon';
+import hexagon from '@azyr/hexagon';
 
 function sum({port1, port2, port3}) {
   console.log(port1 + port2 + port3);
