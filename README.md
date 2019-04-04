@@ -4,6 +4,20 @@ Hexagon is a JavaScript library aimed to make it easier in JS to follow an Hexag
 
 It allows to define infrastructure independent use cases with pure javascript that get their primary and secondary ports at different points in time and gets executed on demand with whichever ports already passed
 
+## Install
+
+Install Hexagon using [`yarn`](https://yarnpkg.com/en/package/jest):
+
+```bash
+yarn add --dev @azyr/hexagon
+```
+
+Or [`npm`](https://www.npmjs.com/):
+
+```bash
+npm install --save-dev @azyr/hexagon
+```
+
 ## Examples
 
 `hexagon` is used to create a UseCase scenario, passing the implementation of the use case as a JS function that receives an object as a single input containing all the ports used in the use case:
