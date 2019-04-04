@@ -1,6 +1,6 @@
 # Hexagon
 
-Hexagon is a JavaScript library aimed to make it easier in JS to have an Hexagonal Architecture, independently from whichever framework you decide to use.
+Hexagon is a JavaScript library aimed to make it easier in JS to follow an Hexagonal Architecture, independently from whichever framework you decide to use.
 
 It allows to define infrastructure independent use cases with pure javascript that get their primary and secondary ports at different points in time and gets executed on demand with whichever ports already passed
 
@@ -38,9 +38,9 @@ Any amount of ports can be bound with `usePorts`, even all of them:
 ```javascript
 const sumUseCase = hexagon(sum);
 
-const sum5UseCase = sumUseCase.usePorts({ port1: 1, port2: 2, port3: 3 });
+const show6UseCase = sumUseCase.usePorts({ port1: 1, port2: 2, port3: 3 });
 
-sum5UseCase.execute(); // 6
+show6UseCase.execute(); // 6
 ```
 
 Multiple UseCases can be executed based on an new unbound UseCase:
