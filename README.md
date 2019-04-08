@@ -1,8 +1,8 @@
 # Hexagon
 
-Hexagon is a JavaScript library aimed to make it easier in JS to follow an Hexagonal Architecture, independently from whichever framework you decide to use.
+Hexagon is a JavaScript library aimed to make it easier in JS to follow a Hexagonal Architecture, independently from whichever framework you decide to use.
 
-It allows to define infrastructure independent use cases with pure javascript that get their primary and secondary ports at different points in time and gets executed on demand with whichever ports already passed
+It allows to define infrastructure-independent use cases with pure javascript that get their primary and secondary ports at different points in time and gets executed on demand with the ports that have been previously passed
 
 ## Install
 
@@ -21,62 +21,73 @@ npm install --save-dev @azyr/hexagon
 ## Examples
 
 `hexagon` is used to create a UseCase scenario, passing the implementation of the use case as a JS function that receives an object as a single input containing all the ports used in the use case:
+
 ```javascript
 import hexagon from '@azyr/hexagon';
 
-function sum({port1, port2, port3}) {
-  console.log(port1 + port2 + port3);
+function showSum({
+  num1, // primary port (first summand)
+  num2, // primaty port (second summand)
+  show, // secondary port (render the result)
+}) {
+  show(num1 + num2);
 }
 
-const sumUseCase = hexagon(sum);
+const showSumUseCase = hexagon(showSum);
 ```
 
 With `execute`, a UseCase can be executed passing all the ports:
-```javascript
-const sumUseCase = hexagon(sum);
 
-sumUseCase.execute({ port1: 1, port2: 2, port3: 3 }); // 6
+```javascript
+const showSumUseCase = hexagon(showSum);
+
+showSumUseCase.execute({ num1: 1, num2: 2, show: res => console.log(res) }); // 3
 ```
 
-The ports can be bound with `usePorts`
+With `usePorts`, a new UseCase is returned with those ports bound
+
 ```javascript
-const sumUseCase = hexagon(sum);
+const showSumUseCase = hexagon(showSum);
 
-const sum5UseCase = sumUseCase.usePorts({ port1: 5 });
+const logSumUseCase = showSumUseCase.usePorts({ show: res => console.log(res) });
 
-sum5UseCase.execute({ port2: 2, port3: 3 }); // 10
-sum5UseCase.execute({ port2: 1, port3: 2 }); // 8
+logSumUseCase.execute({ num1: 2, num2: 3 }); // 5
+logSumUseCase.execute({ num1: 1, num2: 2 }); // 3
 ```
 
 Any amount of ports can be bound with `usePorts`, even all of them:
+
 ```javascript
-const sumUseCase = hexagon(sum);
+const showSumUseCase = hexagon(sum);
 
-const show6UseCase = sumUseCase.usePorts({ port1: 1, port2: 2, port3: 3 });
+const log3UseCase = showSumUseCase.usePorts({
+  num1: 1,
+  num2: 2,
+  show: res => console.log(res),
+});
 
-show6UseCase.execute(); // 6
+log3UseCase.execute(); // 3
 ```
 
-Multiple UseCases can be executed based on an new unbound UseCase:
-```javascript
-const sumUseCase = hexagon(sum);
+Multiple UseCases can be build based on a UseCase with some ports already bound:
 
-sumUseCase.execute({ port1: 1, port2: 2, port3: 3 }); // 6
-sumUseCase.execute({ port1: 5, port2: 2, port3: 3 }); // 10
+```javascript
+const showSumUseCase = hexagon(sum);
+
+const logSumUseCase = showSumUseCase.usePorts({
+  show: res => console.log(res),
+});
+
+const warnSumUseCase = showSumUseCase.usePorts({
+  show: res => console.warn(`Warning: ${res}`),
+});
+
+logSumUseCase.execute({ num1: 2, num2: 3 }); // 5
+warnSumUseCase.execute({ num1: 2, num2: 3 }); // Warning: 5
 ```
 
-Multiple UseCases can be build based on some UseCase with some ports bound:
-```javascript
-const sumUseCase = hexagon(sum);
+The UseCase can be implemented with an async function (or a function that returns a promise), allowing the infrastructure to await the UseCase execution (or .then the execution)
 
-const sum1UseCase = sumUseCase.usePorts({ port1: 1 });
-const sum5UseCase = sumUseCase.usePorts({ port1: 5 });
-
-sum1UseCase.execute({ port2: 2, port3: 3 }); // 6
-sum5UseCase.execute({ port2: 2, port3: 3 }); // 10
-```
-
-The UseCase can be implemented with an async function, allowing the infrastructure to await the UseCase execution
 ```javascript
 const asyncUseCase = hexagon(asyncFunction);
 
