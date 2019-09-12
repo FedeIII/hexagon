@@ -86,6 +86,8 @@ logSumUseCase.execute({ num1: 2, num2: 3 }); // 5
 warnSumUseCase.execute({ num1: 2, num2: 3 }); // Warning: 5
 ```
 
+### Asynchronicity
+
 The UseCase can be implemented with an async function (or a function that returns a promise), allowing the infrastructure to await the UseCase execution (or .then the execution)
 
 ```javascript
@@ -96,4 +98,33 @@ await asyncUseCase.execute();
 // or without async/await:
 
 asyncUseCase.execute().then(() => {});
+```
+
+### Use Case References
+
+If the same UseCase is called twice with the same ports with the same values, the reference to the returned UseCase is the same:
+
+```javascript
+const useCase1 = useCase.usePorts({ a: 1, b: 2 });
+const useCase2 = useCase.usePorts({ a: 1, b: 2 });
+
+useCase1 === useCase2 // true
+```
+
+If the ports are different or their value changes, the reference will be different:
+
+```javascript
+const useCase1 = useCase.usePorts({ a: 1, b: 2 });
+const useCase2 = useCase.usePorts({ a: 1, c: 3 });
+
+useCase1 === useCase2 // false
+```
+
+If the returned UseCase is called with the same ports, the reference won't change either:
+
+```javascript
+const useCaseWithPortsBound = useCase.usePorts({ a: 1, b: 2 });
+const useCase2 = useCaseWithPortsBound.usePorts({ a: 1 });
+
+useCase1 === useCase2 // true
 ```

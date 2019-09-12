@@ -9,21 +9,43 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn clean && babel ./src -d ./dist --ignore test.js",
-    "test": "jest"
+    "build": "yarn clean && babel ./src -d ./dist --ignore test.js --minify",
+    "test": "jest --passWithNoTests",
+    "lint": "eslint . --ignore-pattern /dist/**/*",
+    "lint:fix": "eslint . --fix --ignore-pattern /dist/**/*"
   },
   "author": "fedelll@gmail.com",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "babel-core": "^7.0.0-0",
-    "babel-jest": "^23.6.0",
-    "jest": "^23.6.0"
+    "@babel/cli": "^7.4.4",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.4.5",
+    "babel-plugin-transform-es2015-modules-simple-commonjs": "^0.3.0",
+    "babel-preset-minify": "^0.5.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^3.0.0",
+    "jest": "24.8.0",
+    "lint-staged": "^9.0.0",
+    "prettier": "^1.18.2"
   },
   "files": [
     "dist"
   ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --ignore-pattern /dist/**/*",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
+  },
   "keywords": [
     "hexagonal architecture"
   ]

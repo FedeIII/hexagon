@@ -1,5 +1,23 @@
-const getUsePorts = (fn, name, ports = {}) => (newPorts = {}) =>
-  createHexagon(fn, name, { ...ports, ...newPorts });
+import memoize from './memo';
+
+const getUsePorts = (fn, name, ports = {}, oldCache) => {
+  let cache;
+
+  const usePorts = (newPorts = {}) => {
+    return createHexagon(fn, name, { ...ports, ...newPorts }, cache);
+  };
+
+  const memoizedUsePorts = memoize(usePorts, ports);
+
+  if (oldCache) {
+    memoizedUsePorts.cache = oldCache;
+  }
+
+  /* eslint-disable prefer-destructuring */
+  cache = memoizedUsePorts.cache;
+
+  return memoizedUsePorts;
+};
 
 const getExecute = (fn, ports = {}) => (newPorts = {}) => {
   let allPorts = { ...ports, ...newPorts };
@@ -11,9 +29,9 @@ const getExecute = (fn, ports = {}) => (newPorts = {}) => {
   return fn(allPorts);
 };
 
-const createHexagon = (fn, name, ports = {}) => ({
+const createHexagon = (fn, name, ports = {}, cache) => ({
   name,
-  usePorts: getUsePorts(fn, name, ports),
+  usePorts: getUsePorts(fn, name, ports, cache),
   execute: getExecute(fn, ports),
 });
 
