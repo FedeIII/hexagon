@@ -9,13 +9,13 @@ It allows to define infrastructure-independent use cases with pure javascript th
 Install Hexagon using [`yarn`](https://yarnpkg.com/en/package/jest):
 
 ```bash
-yarn add --dev @azyr/hexagon
+yarn add @azyr/hexagon
 ```
 
 Or [`npm`](https://www.npmjs.com/):
 
 ```bash
-npm install --save-dev @azyr/hexagon
+npm install @azyr/hexagon
 ```
 
 ## Examples
