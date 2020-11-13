@@ -1,6 +1,6 @@
 {
   "name": "@azyr/hexagon",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "./dist/index.js",
   "license": "MIT",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "yarn clean && babel ./src -d ./dist --ignore test.js --minify",
+    "build": "yarn clean && babel ./src -d ./dist --ignore test.js",
     "test": "jest --passWithNoTests",
     "lint": "eslint . --ignore-pattern /dist/**/*",
     "lint:fix": "eslint . --fix --ignore-pattern /dist/**/*"
